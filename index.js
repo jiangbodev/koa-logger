@@ -7,6 +7,7 @@ const Counter = require('passthrough-counter')
 const humanize = require('humanize-number')
 const bytes = require('bytes')
 const chalk = require('chalk')
+const moment = require('moment')
 
 /**
  * Expose logger.
@@ -137,5 +138,5 @@ function time (start) {
 }
 
 function getFormattedDate() {
-   return new Date().toJSON().substring(0,19).replace('T',' ');
+   return new Date().toJSON().substring(5,19).replace('T',' ') + ' UTC';
 }
