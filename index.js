@@ -7,6 +7,7 @@ const Counter = require('passthrough-counter')
 const humanize = require('humanize-number')
 const bytes = require('bytes')
 const chalk = require('chalk')
+const moment = require('moment')
 
 /**
  * Expose logger.
@@ -36,11 +37,13 @@ function dev (opts) {
   return async function logger (ctx, next) {
     // request
     const start = Date.now()
+    /*
     console.log('  ' + chalk.gray('<--') +
       ' ' + chalk.bold('%s') +
       ' ' + chalk.gray('%s'),
         ctx.method,
         ctx.originalUrl)
+    */
 
     try {
       await next()
@@ -108,7 +111,7 @@ function log (ctx, start, len, err, event) {
     : event === 'close' ? chalk.yellow('-x-')
     : chalk.gray('-->')
 
-  console.log('  ' + upstream +
+  console.log(getFormattedDate() + ' ' + upstream +
     ' ' + chalk.bold('%s') +
     ' ' + chalk.gray('%s') +
     ' ' + chalk[color]('%s') +
@@ -132,4 +135,8 @@ function time (start) {
   return humanize(delta < 10000
     ? delta + 'ms'
     : Math.round(delta / 1000) + 's')
+}
+
+function getFormattedDate() {
+   return new Date().toJSON().substring(5,19).replace('T',' ') + ' UTC';
 }
