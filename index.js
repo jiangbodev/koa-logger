@@ -36,11 +36,13 @@ function dev (opts) {
   return async function logger (ctx, next) {
     // request
     const start = Date.now()
+    /*
     console.log('  ' + chalk.gray('<--') +
       ' ' + chalk.bold('%s') +
       ' ' + chalk.gray('%s'),
         ctx.method,
         ctx.originalUrl)
+    */
 
     try {
       await next()
@@ -108,7 +110,7 @@ function log (ctx, start, len, err, event) {
     : event === 'close' ? chalk.yellow('-x-')
     : chalk.gray('-->')
 
-  console.log('  ' + upstream +
+  console.log(getFormattedDate() + ' ' + upstream +
     ' ' + chalk.bold('%s') +
     ' ' + chalk.gray('%s') +
     ' ' + chalk[color]('%s') +
@@ -132,4 +134,10 @@ function time (start) {
   return humanize(delta < 10000
     ? delta + 'ms'
     : Math.round(delta / 1000) + 's')
+}
+
+function getFormattedDate() {
+    var date = new Date();
+    var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    return str;
 }
